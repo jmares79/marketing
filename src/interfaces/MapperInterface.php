@@ -2,7 +2,9 @@
 
 namespace Marketing\interfaces;
 
+use Marketing\entities\User;
+
 interface MapperInterface
 {
-    public function findById($id);
+    public function findBy(User $user);
 }

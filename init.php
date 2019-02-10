@@ -5,17 +5,12 @@ require_once __DIR__.'/vendor/autoload.php';
 // $resources = parse_ini_file("config/config.ini");
 // $stream = $resources['url'];
 
-// 1) Create a DB according to the parameter passed (In our example, Mysql, but it can be customized via command line)
-$connection = array(
-    'host' => '127.0.0.1',
-    'database' => 'marketing',
-    'username' => 'root',
-    'password' => ''
-);
+// 1) Create a Task to create the DB according to the parameter passed (In our example, Mysql, but it can be customized via command line if required for example)
 
-$driver = Marketing\factories\DBFactory::create('MySql', $connection);
+$task = new Marketing\TaskController();
+$task->execute();
 
-var_dump($driver->fetch(1));
+var_dump($driver->fetch(2));
 die;
 // 2) Create a UserMapper and a User
 

@@ -7,9 +7,12 @@ use PDO;
 
 class MySql extends AbstractAdapter implements AdapterInterface
 {
+    protected $table;
+
     public function __construct($connection)
     {
         parent::__construct($connection);
+
         $this->connect();
     }
 
@@ -32,14 +35,14 @@ class MySql extends AbstractAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function fetch($id)
+    public function fetch($username, $table)
     {
-        if ($id === null) {
-            return $this->fetchAll();
+        if ($username === null) {
+            return $this->fetchAll($table);
         }
 
-        $stmt = $this->connection->prepare('SELECT * FROM users WHERE id = :id');
-        $stmt->bindParam(':id', $id);
+        $stmt = $this->connection->prepare("SELECT * FROM $table WHERE username = :username");
+        $stmt->bindParam(':username', $username);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -48,9 +51,12 @@ class MySql extends AbstractAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function insert($data)
+    public function insert($data, $table)
     {
-        $stmt = $this->connection->prepare("INSERT INTO USERS (username, password) VALUES (?, ?)");
+        echo "data\n";
+        var_dump($data);
+        die;
+        $stmt = $this->connection->prepare("INSERT INTO $table (username, password) VALUES (?, ?)");
         $stmt->bindParam(1, $data['username']);
         $stmt->bindParam(2, $data['password']);
 
@@ -60,17 +66,19 @@ class MySql extends AbstractAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function update($id)
+    public function update($id, $table)
     {
         // code
     }
 
-    protected function fetchAll()
+    /**
+     * Fetches all the rows in the desired table
+     */
+    protected function fetchAll($table)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM users');
-        $rows = $stmt->execute();
+        $stmt = $this->connection->prepare('SELECT * FROM $table');
+        $stmt->execute();
 
-        var_dump($rows);
-        die;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

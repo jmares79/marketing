@@ -3,6 +3,8 @@
 namespace Marketing\mapper;
 
 use Marketing\interfaces\MapperInterface;
+use Marketing\interfaces\AdapterInterface;
+use Marketing\entities\User;
 
 /**
  * Concrete User mapper, to do a bi directional connection between the User entity and the DB adapter
@@ -26,9 +28,9 @@ class UserMapper implements MapperInterface
      * 
      * @param integer $id
      */
-    public function findById($id)
+    public function findBy(User $user)
     {
-        return $this->adapter->fetch($id, $this->table);
+        return $this->adapter->fetch($user->getUsername(), $this->table);
     }
 
     /**
@@ -38,9 +40,9 @@ class UserMapper implements MapperInterface
      */
     public function save(User $user)
     {
-        $rs = $this->adapter->fetch($id, $this->table);
+        $rs = $this->findBy($user);
 
-        if ($rs === null) {
+        if (!$rs) {
             $this->adapter->insert($user, $this->table);
         } else {
             $this->adapter->update($user, $this->table);

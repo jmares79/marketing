@@ -1,6 +1,6 @@
 <?php
 
-namespace MArketing\entities;
+namespace Marketing\entities;
 
 class User
 {
@@ -12,16 +12,16 @@ class User
      /**
       * @var string
       */
-    private $email;
+    private $password;
 
-    public function __construct($username = '', $email = '')
+    public function __construct($username = '', $password = '')
     {
-        if ($username == '' || $email == '') {
-            throw new InvalidArgumentException("Username and email cannot be empty ", 1);
+        if ($username == '' || $password == '') {
+            throw new InvalidArgumentException("Username and password cannot be empty ", 1);
         }
 
         $this->username = $username;
-        $this->email = $email;
+        $this->password = $password;
     }
 
     public function setUsername($username)
@@ -30,19 +30,14 @@ class User
         return $this;
     }
 
-    public function setEmail($email)
+    public function setPassword($password)
     {
-        $this->email = $email;
+        $this->password = $password;
         return $this;
     }
 
-    public function getUsername($username)
+    public function getUsername()
     {
         return $this->username;
-    }
-
-    public function getEmail($email)
-    {
-        return $this->email;
     }
 }

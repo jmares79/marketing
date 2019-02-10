@@ -15,21 +15,26 @@ interface AdapterInterface
     public function disconnect();
 
     /**
-     * Fetch a row by its id
+     * Fetch a row by its username
      * 
-     * @param integer $id
+     * @param string $username
+     * @param string $table
      */
-    public function fetch($id);
+    public function fetch($username, $table);
     
     /**
      * Insert a new row into the DB
+     * 
+     * @param mixed $data
+     * @param string $table
      */
-    public function insert($data);
+    public function insert($data, $table);
 
     /**
      * Update a row by its primary id
      * 
-     * @para integer $id
+     * @param integer $id
+     * @param string $table
      */
-    public function update($id);
+    public function update($id, $table);
 }
