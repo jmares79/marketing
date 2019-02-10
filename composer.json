@@ -1,0 +1,16 @@
+{
+    "name": "jose/marketing-15",
+    "authors": [
+        {
+            "name": "Jose Ares",
+            "email": "jmares79@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {"Marketing\\": "src/"}
+    }
+}
