@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Marketing\factories;
@@ -13,7 +12,9 @@ class DBFactory
         if (empty($connection) || $driverClass == null || $driverClass == '') {
             throw new InvalidArgumentException("Connection parameter must be filled with connection data", 1);
         }
-
+        var_dump("Marketing\adapters\\$driverClass");
+        var_dump(class_exists("Marketing\adapters\\$driverClass"));
+        die;
         if (!class_exists($driverClass)) {
             throw new InvalidDriverException("The adapter driver is non existent", 1);
         }

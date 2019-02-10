@@ -7,11 +7,12 @@ use Marketing\interfaces\AdapterInterface;
 class MySql extends AbstractAdapter implements AdapterInterface
 {
     /**
-     * @inheritDoc
+     * Connects to a Mysql driver using PDO for example purposes
      */
     public function connect()
     {
-        $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
+        // $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
+        $this->connection = new PDO("mysql:host={$this->host};dbname={$this->database}", $this->username,$this->password);
     }
 
     /**
@@ -19,7 +20,7 @@ class MySql extends AbstractAdapter implements AdapterInterface
      */
     public function disconnect()
     {
-        mysqli_close($this->connection);
+        $this->connection = null;
     }
 
     /**
@@ -33,9 +34,13 @@ class MySql extends AbstractAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function insert()
+    public function insert($data)
     {
-        // code
+        $stmt = $this->connection->prepare("INSERT INTO USERS (username, password) VALUES (?, ?)");
+        $stmt->bindParam(1, $data['username']);
+        $stmt->bindParam(2, $data['password']);
+
+        $stmt->execute();
     }
 
     /**

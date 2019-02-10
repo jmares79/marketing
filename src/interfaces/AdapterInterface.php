@@ -7,7 +7,7 @@ interface AdapterInterface
     /**
      * Creates a connects to a DB
      */
-    public function connect($connectionString);
+    public function connect();
     
     /**
      * Disconnect the adapter from the DB
@@ -24,7 +24,7 @@ interface AdapterInterface
     /**
      * Insert a new row into the DB
      */
-    public function insert();
+    public function insert($data);
 
     /**
      * Update a row by its primary id
