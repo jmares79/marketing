@@ -14,6 +14,8 @@ class UserMapper implements MapperInterface
      */
     private $adapter;
 
+    protected $table = 'users';
+
     public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
@@ -26,7 +28,7 @@ class UserMapper implements MapperInterface
      */
     public function findById($id)
     {
-        return $this->adapter->fetch($id);
+        return $this->adapter->fetch($id, $this->table);
     }
 
     /**
@@ -36,12 +38,12 @@ class UserMapper implements MapperInterface
      */
     public function save(User $user)
     {
-        $rs = $this->adapter->fetch($id);
+        $rs = $this->adapter->fetch($id, $this->table);
 
         if ($rs === null) {
-            $this->adapter->insert($user);
+            $this->adapter->insert($user, $this->table);
         } else {
-            $this->adapter->update($user);
+            $this->adapter->update($user, $this->table);
         }
     }
 }

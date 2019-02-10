@@ -13,12 +13,12 @@ abstract class AbstractAdapter
     protected $database;
     protected $connection;
 
-    public function __construct($database = 'test', $host = '127.0.0.1', $username = 'root', $password = '')
+    public function __construct($connection)
     {
-        $this->username = $username;
-        $this->password = $password;
-        $this->host = $host;
-        $this->database = $database;
+        $this->username = $connection['username'];
+        $this->password = $connection['password'];
+        $this->host = $connection['host'];
+        $this->database = $connection['database'];
     }
 
     public function setHost($host)

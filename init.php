@@ -14,6 +14,9 @@ $connection = array(
 );
 
 $driver = Marketing\factories\DBFactory::create('MySql', $connection);
+
+var_dump($driver->fetch(1));
+die;
 // 2) Create a UserMapper and a User
 
 // 3) Add data and save the user to the DDBB via the DB connection

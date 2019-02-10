@@ -3,16 +3,22 @@
 namespace Marketing\adapters;
 
 use Marketing\interfaces\AdapterInterface;
+use PDO;
 
 class MySql extends AbstractAdapter implements AdapterInterface
 {
+    public function __construct($connection)
+    {
+        parent::__construct($connection);
+        $this->connect();
+    }
+
     /**
      * Connects to a Mysql driver using PDO for example purposes
      */
     public function connect()
     {
-        // $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
-        $this->connection = new PDO("mysql:host={$this->host};dbname={$this->database}", $this->username,$this->password);
+        $this->connection = new PDO("mysql:host={$this->host};dbname={$this->database}", $this->username, $this->password);
     }
 
     /**
@@ -28,7 +34,15 @@ class MySql extends AbstractAdapter implements AdapterInterface
      */
     public function fetch($id)
     {
-        // code
+        if ($id === null) {
+            return $this->fetchAll();
+        }
+
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -49,5 +63,14 @@ class MySql extends AbstractAdapter implements AdapterInterface
     public function update($id)
     {
         // code
+    }
+
+    protected function fetchAll()
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM users');
+        $rows = $stmt->execute();
+
+        var_dump($rows);
+        die;
     }
 }
