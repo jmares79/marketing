@@ -35,14 +35,17 @@ class MySql extends AbstractAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function fetch($username, $table)
+    public function fetch($whereClause, $table)
     {
-        if ($username === null) {
+        if (empty($whereClause)) {
             return $this->fetchAll($table);
         }
 
-        $stmt = $this->connection->prepare("SELECT * FROM $table WHERE username = :username");
-        $stmt->bindParam(':username', $username);
+        $field = array_keys($whereClause)[0];
+        $value = $whereClause[$field];
+
+        $stmt = $this->connection->prepare("SELECT * FROM $table WHERE $field = :$field");
+        $stmt->bindParam(":$field", $value);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -54,7 +57,7 @@ class MySql extends AbstractAdapter implements AdapterInterface
     public function insert($data, $table)
     {
         if (empty($data)) {
-            throw new InvalidArgumentException("Data parameter must be filled with proper data", 1);
+            throw new \InvalidArgumentException("Data parameter must be filled with proper data", 1);
         }
 
         $columns = implode(", ", array_keys($data));
@@ -62,15 +65,31 @@ class MySql extends AbstractAdapter implements AdapterInterface
         
         $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$placeholders});";
         $stmt = $this->connection->prepare($sql);
-        $stmt->execute(array_values($data));
+        
+        return $stmt->execute(array_values($data));
     }
 
     /**
      * @inheritDoc
      */
-    public function update($id, $table)
+    public function update($data, $id, $table)
     {
-        // code
+        if (empty($data) || $id == null) {
+            throw new \InvalidArgumentException("Data and id must be filled with proper data", 1);
+        }
+
+        $setQuery = '';
+
+        foreach ($data as $key => $value) {
+            $setQuery .= "`$key` = '$value' ,";
+        }
+
+        $setQuery = rtrim($setQuery, ",");
+
+        $sql = "UPDATE {$table} SET $setQuery WHERE id = ?;";
+        $stmt = $this->connection->prepare($sql);
+
+        return $stmt->execute(array($id));
     }
 
     /**

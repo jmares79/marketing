@@ -31,11 +31,12 @@ class TaskController
      */
     public function execute()
     {
-        // $user = $this->createUser('John', 'mynameisjohn');
-        $anotherUser = $this->createUser('Paul', 'mynameispaul');
+        $user = $this->createUser('John', 'mynameisjohnAgain');
+        $anotherUser = $this->createUser('Paul', 'mynameispaulChanged');
 
         $userMapper = new UserMapper($this->adapter);
 
+        $userMapper->save($user);
         $userMapper->save($anotherUser);
     }
 

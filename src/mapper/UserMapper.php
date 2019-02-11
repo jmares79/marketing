@@ -33,7 +33,7 @@ class UserMapper implements MapperInterface
      */
     public function findBy(User $user)
     {
-        return $this->adapter->fetch($user->getUsername(), $this->table);
+        return $this->adapter->fetch(array('username' => $user->getUsername()), $this->table);
     }
 
     /**
@@ -44,14 +44,23 @@ class UserMapper implements MapperInterface
     public function save(User $user)
     {
         $userData = $user->toArray();
-        $rs = $this->findBy($user);
+        $recordSet = $this->findBy($user);
 
-        if (!$rs) {
-            $this->adapter->insert($userData, $this->table);
-        } else {
-            echo "UPDATING\n";
-            $sql = $this->getUpdateQuery();
-            $this->adapter->update($user, $this->table);
+        try {
+            if (!$recordSet) {
+                $res = $this->adapter->insert($userData, $this->table);
+            } else {
+                $fieldsToUpdate = array_diff($userData, $recordSet);
+
+                if (empty($fieldsToUpdate)) { return true; }
+
+                $res = $this->adapter->update($fieldsToUpdate, $recordSet['id'], $this->table);
+            }
+        } catch (\InvalidArgumentException $e) {
+            var_dump($e->getMessage());
+            die;
         }
+
+        return $res;
     }
 }

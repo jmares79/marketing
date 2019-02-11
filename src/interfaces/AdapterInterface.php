@@ -17,15 +17,15 @@ interface AdapterInterface
     /**
      * Fetch a row by its username
      * 
-     * @param string $username
+     * @param array $whereClause Contains the generic where clause in a way 'field' => value
      * @param string $table
      */
-    public function fetch($username, $table);
+    public function fetch($whereClause, $table);
     
     /**
      * Insert a new row into the DB
      * 
-     * @param mixed $data
+     * @param array $data
      * @param string $table
      */
     public function insert($data, $table);
@@ -33,8 +33,9 @@ interface AdapterInterface
     /**
      * Update a row by its primary id
      * 
+     * @param array $data
      * @param integer $id
      * @param string $table
      */
-    public function update($id, $table);
+    public function update($data, $id, $table);
 }
