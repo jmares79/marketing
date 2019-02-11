@@ -5,6 +5,8 @@ namespace Marketing;
 use Marketing\entities\User;
 use Marketing\mapper\UserMapper;
 use Marketing\factories\DBFactory;
+use Marketing\interfaces\MapperInterface;
+use Marketing\interfaces\AdapterInterface;
 
 /**
  * Class to execute the required example steps for the exercise.
@@ -14,17 +16,14 @@ use Marketing\factories\DBFactory;
 class TaskController
 {
     protected $adapter;
+    protected $mapper;
     protected $secondAdapter;
     protected $connection;
 
-    public function __construct()
+    public function __construct(MapperInterface $mapper, AdapterInterface $adapter)
     {
-        $this->connection = array(
-            'host' => '127.0.0.1',
-            'database' => 'marketing',
-            'username' => 'root',
-            'password' => ''
-        );
+        $this->adapter = $adapter;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -32,9 +31,6 @@ class TaskController
      */
     public function execute()
     {
-        $this->adapter = DBFactory::create('MySql', $this->connection);
-        // $this->secondAdapter =DBFactory::create('MagicSql', $this->connection);
-
         $user = $this->createUser('John', 'mynameisjohn');
         $anotherUser = $this->createUser('Paul', 'mynameispaul');
 

@@ -14,7 +14,7 @@ class DBFactory
         $class = "Marketing\adapters\\{$driverClass}";
 
         if (empty($connection) || $driverClass == null || $driverClass == '') {
-            throw new InvalidArgumentException("Connection parameter must be filled with connection data", 1);
+            throw new \InvalidArgumentException();
         }
 
         if (!class_exists($class)) {

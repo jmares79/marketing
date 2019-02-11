@@ -12,10 +12,13 @@ use Marketing\entities\User;
 class UserMapper implements MapperInterface
 {
     /**
-     * @var StorageAdapter
+     * @var $adapter
      */
-    private $adapter;
+    protected $adapter;
 
+    /**
+     * @var $table
+     */
     protected $table = 'users';
 
     public function __construct(AdapterInterface $adapter)
@@ -24,9 +27,9 @@ class UserMapper implements MapperInterface
     }
 
     /**
-     * Finds a User by its id
+     * Finds a User
      * 
-     * @param integer $id
+     * @param User $user
      */
     public function findBy(User $user)
     {
@@ -40,6 +43,9 @@ class UserMapper implements MapperInterface
      */
     public function save(User $user)
     {
+        $d = $user->toArray();
+        var_dump($d);
+        die;
         $rs = $this->findBy($user);
 
         if (!$rs) {

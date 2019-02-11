@@ -53,9 +53,11 @@ class MySql extends AbstractAdapter implements AdapterInterface
      */
     public function insert($data, $table)
     {
-        echo "data\n";
-        var_dump($data);
-        die;
+        if (empty($data)) {
+            throw new InvalidArgumentException("Data parameter must be filled with proper data", 1);
+        }
+
+        // $columns = implode(", ", array)
         $stmt = $this->connection->prepare("INSERT INTO $table (username, password) VALUES (?, ?)");
         $stmt->bindParam(1, $data['username']);
         $stmt->bindParam(2, $data['password']);
