@@ -30,6 +30,8 @@ class UserMapper implements MapperInterface
      * Finds a User
      * 
      * @param User $user
+     * 
+     * @return array Array with the user data
      */
     public function findBy(User $user)
     {
@@ -40,6 +42,8 @@ class UserMapper implements MapperInterface
      * Saves a user into the DB
      * 
      * @param User $user
+     * 
+     * @return bool On success or not
      */
     public function save(User $user)
     {

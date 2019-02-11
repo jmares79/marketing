@@ -5,6 +5,9 @@ namespace Marketing\adapters;
 use Marketing\interfaces\AdapterInterface;
 use PDO;
 
+/**
+ * Adapter to handle MySql connections
+ */ 
 class MySql extends AbstractAdapter implements AdapterInterface
 {
     protected $table;
@@ -94,10 +97,12 @@ class MySql extends AbstractAdapter implements AdapterInterface
 
     /**
      * Fetches all the rows in the desired table
+     * 
+     * @param string $table
      */
     protected function fetchAll($table)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM $table');
+        $stmt = $this->connection->prepare("SELECT * FROM $table");
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
