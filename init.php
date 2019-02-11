@@ -7,7 +7,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 // 1) Create a Task to create the DB according to the parameter passed (In our example, Mysql, but it can be customized via command line if required for example)
 
-//Has to be fetched from config
+// Has to be fetched from config
 $connection = array(
     'host' => '127.0.0.1',
     'database' => 'marketing',

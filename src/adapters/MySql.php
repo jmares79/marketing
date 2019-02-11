@@ -57,12 +57,12 @@ class MySql extends AbstractAdapter implements AdapterInterface
             throw new InvalidArgumentException("Data parameter must be filled with proper data", 1);
         }
 
-        // $columns = implode(", ", array)
-        $stmt = $this->connection->prepare("INSERT INTO $table (username, password) VALUES (?, ?)");
-        $stmt->bindParam(1, $data['username']);
-        $stmt->bindParam(2, $data['password']);
-
-        $stmt->execute();
+        $columns = implode(", ", array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?')); 
+        
+        $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$placeholders});";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(array_values($data));
     }
 
     /**

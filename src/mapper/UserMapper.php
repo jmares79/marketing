@@ -43,14 +43,14 @@ class UserMapper implements MapperInterface
      */
     public function save(User $user)
     {
-        $d = $user->toArray();
-        var_dump($d);
-        die;
+        $userData = $user->toArray();
         $rs = $this->findBy($user);
 
         if (!$rs) {
-            $this->adapter->insert($user, $this->table);
+            $this->adapter->insert($userData, $this->table);
         } else {
+            echo "UPDATING\n";
+            $sql = $this->getUpdateQuery();
             $this->adapter->update($user, $this->table);
         }
     }
