@@ -1,34 +1,36 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Marketing\factories\DBFactory;
 use Marketing\adapters\MySql;
 use Marketing\entities\User;
 
+/**
+ * Class to test UserMapper class
+ */
 class UserMapperTest extends TestCase
 {
     protected $userMapper;
-    // protected $mockedFactory;
 
     public function setUp() :void
     {
-        // $this->mockedFactory = $this->createMock(DBFactory::class);
         $this->mockedAdapter = $this->createMock(MySql::class);
-        // $this->mockedUser = $this->createMock(User::class);
-
         $this->userMapper = new \Marketing\mapper\UserMapper($this->mockedAdapter);
     }
 
+    /**
+     * Tests finding by a non existing user
+     */
     public function testFindByNonExistingUser()
     {
         $mockedUser = $this->createMock(User::class);
         $mockedUser->method('getUsername')->willReturn('unknownUser');
 
-        // $res = $this->userMapper->findBy($mockedUser);
-
         $this->assertSame(null, $this->userMapper->findBy($mockedUser));
     }
 
+    /**
+     * Tests finding by an existing user
+     */
     public function testFindByExistingUser()
     {
         $mockedUser = $this->createMock(User::class);
@@ -53,9 +55,11 @@ class UserMapperTest extends TestCase
     }
 
     /**
+     * Tests saving a different type of users mocked with the help of the dataprovider
+     * 
      * @dataProvider adapterResponsesProvider
      */
-    public function testSaveNewValidUser($fetchReturn, $saveMethodType, $saveMethodReturn, $toArray)
+    public function testSaveUser($fetchReturn, $saveMethodType, $saveMethodReturn, $toArray)
     {
         $this->mockedAdapter
             ->method('fetch')
@@ -77,16 +81,10 @@ class UserMapperTest extends TestCase
 
         $this->assertTrue($res);
     }
-    
 
-    // /**
-    //  * @expectedException \InvalidArgumentException
-    //  */
-    // public function testSaveInvalidUser()
-    // {
-
-    // }
-
+    /**
+     * Data provider
+     */
     public function adapterResponsesProvider()
     {
         return array(
