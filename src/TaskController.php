@@ -31,12 +31,15 @@ class TaskController
      */
     public function execute()
     {
-        $user = $this->createUser('John', 'mynameisjohnAgain');
-        $anotherUser = $this->createUser('Paul', 'mynameispaulChanged');
+        try {
+            // $user = $this->createUser(null, null);
+            $anotherUser = $this->createUser('Paul', 'mynameispaulChanged');
+        } catch (\InvalidArgumentException $e) {
+            echo $e->getMessage();
+            die;
+        }
 
         $userMapper = new UserMapper($this->adapter);
-
-        $userMapper->save($user);
         $userMapper->save($anotherUser);
     }
 

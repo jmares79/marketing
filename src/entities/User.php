@@ -14,10 +14,10 @@ class User
       */
     private $password;
 
-    public function __construct($username = '', $password = '')
+    public function __construct($username, $password)
     {
-        if ($username == '' || $password == '') {
-            throw new InvalidArgumentException("Username and password cannot be empty ", 1);
+        if (empty($username) || empty($password)) {
+            throw new \InvalidArgumentException("Username and password cannot be empty ", 1);
         }
 
         $this->username = $username;

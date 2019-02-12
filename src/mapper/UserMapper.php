@@ -62,7 +62,7 @@ class UserMapper implements MapperInterface
             }
         } catch (\InvalidArgumentException $e) {
             var_dump($e->getMessage());
-            die;
+            return false;
         }
 
         return $res;
