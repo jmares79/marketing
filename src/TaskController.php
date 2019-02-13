@@ -10,7 +10,7 @@ use Marketing\interfaces\AdapterInterface;
 
 /**
  * Class to execute the required example steps for the exercise.
- * It suppose to mimic a controller (In the case this was done via MVC or similar) and
+ * It is supposed to mimic a controller (In the case this was done via MVC or similar) and
  * execute the steps to show the capabilities of the software
  */
 class TaskController
@@ -40,9 +40,14 @@ class TaskController
         }
 
         $userMapper = new UserMapper($this->adapter);
-        $userMapper->save($anotherUser);
+
+        //In the case of an API, here we should return the value to see how to display a success/error case
+        return $userMapper->save($anotherUser);
     }
 
+    /**
+     * Creates the User (Or any desired) entity
+     */
     protected function createUser($username, $password)
     {
         return new User($username, $password);

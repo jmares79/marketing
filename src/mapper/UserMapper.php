@@ -61,6 +61,7 @@ class UserMapper implements MapperInterface
                 $res = $this->adapter->update($fieldsToUpdate, $recordSet['id'], $this->table);
             }
         } catch (\InvalidArgumentException $e) {
+            //Logging would be the correct thing for example
             var_dump($e->getMessage());
             return false;
         }

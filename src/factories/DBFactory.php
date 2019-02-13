@@ -18,7 +18,7 @@ class DBFactory
         }
 
         if (!class_exists($class)) {
-            throw new InvalidDriverException("The adapter driver is non existent", 1);
+            throw new InvalidDriverException("The adapter driver is non existent. Please provide a valid one.", 1);
         }
 
         return new $class($connection);

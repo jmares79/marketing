@@ -19,11 +19,11 @@ Part of the core of the code is intended to be modified WITHOUT the need of modi
 
 # Installation
 Clone the repo and run composer install, just in case, also run "dump-autoload".
-Create a DB into the used server (In our case, MySql) and add the connection string parameters to the array in "init.php" (Might be set to the INI file)
+Create a DB into the used server (In our case, MySql) and add the connection string parameters to the INI file in the `config` folder.
 
 # Description and structure
 
-The project, from the architecture point of view, consists of an entry point "init.php" (For the lack of a better name), that has a hardcoded connection string array with the values of the local DB (The last version might have the INI set configuration)
+The project, from the architecture point of view, consists of an entry point "init.php" (For the lack of a better name), that has a  connection string array with the values of the local DB taken from an INI set configuration.
 
 It then instantiates within a try-catch block the basic classes needed for the soft to be useful, and passes them to the TaskController, in order for it to execute the needed steps.
 
@@ -54,6 +54,16 @@ The main improvement to be done is setting and checking arguments in the adapter
 
 * Ok, User is not useful, I need another type of objects to be saved, how do I do that?
  - Just create a new entity with the desired structure and a mapper, similar to the existing one, to map the data and perform the bidirectional transfer between the entity and the DB, and don't forget to create the test first (If you're on TDD) or after (Becase we need it!)
+
+## Testing and mocking object
+
+A test was created to show how to do it and how to mock some needed objects for it. 
+
+A *UserMapperTest* is in place, that tests finding and saving different types of users. It basically was done by mocking (Via the PHPUnit API) the needed objects that the mapper needs, in our case a mocked adapter and a mocked user. 
+
+Then, we set the values we need for several of the mocked object's methods to return in order to test every possible case in the codebase, using a data provider (Also PHPUnit API).
+
+It heavily relies on the `method(<name>)` and `willReturn(<value>)` in order to set, in every test iteration, the desired values.
 
 ## How to execute
 

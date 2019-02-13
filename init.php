@@ -18,11 +18,15 @@ $connection = array(
 );
 
 try {
-    $adapter = Marketing\factories\DBFactory::create('MySql', $connection);
+    $adapter = Marketing\factories\DBFactory::create('PostgreSql', $connection);
     $userMapper = new Marketing\mapper\UserMapper($adapter);
 } catch (\InvalidArgumentException $e) {
     echo "Connection string must be properly filled with DB connection data\n";
-} 
+    die;
+} catch (Marketing\exceptions\InvalidDriverException $e) {
+    echo $e->getMessage();
+    die;
+}
 
 $task = new Marketing\TaskController($userMapper, $adapter);
 $task->execute();
