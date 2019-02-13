@@ -2,8 +2,7 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-// $resources = parse_ini_file("config/config.ini");
-// $stream = $resources['url'];
+$resource = parse_ini_file("config/config.ini");
 
 // 1) Create a Task to create the DB according to the parameter passed (In our example, Mysql, but it can be customized via command line if required for example)
 // 2) Create a UserMapper and a User
@@ -12,10 +11,10 @@ require_once __DIR__.'/vendor/autoload.php';
 
 // Has to be fetched from config
 $connection = array(
-    'host' => '127.0.0.1',
-    'database' => 'marketing',
-    'username' => 'root',
-    'password' => ''
+    'host' => $resource['host'],
+    'database' => $resource['database'],
+    'username' => $resource['username'],
+    'password' => $resource['password']
 );
 
 try {
