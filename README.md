@@ -68,4 +68,12 @@ It heavily relies on the `method(<name>)` and `willReturn(<value>)` in order to 
 ## How to execute
 
 In a Linux bash/console, just exec `php init.php`, and `./vendor/bin/phpunit tests/<DESIRED-TEST>.php` if the tests need to be executed.
-    
+
+
+## Laravel and Symfony repos
+
+As explained before, in case of needing some coding examples with frameworks, these are the links:
+
+* (https://github.com/jmares79/bank-api)
+* (https://github.com/jmares79/snap-test)
+* (https://github.com/jmares79/roster)
