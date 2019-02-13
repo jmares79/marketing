@@ -21,11 +21,9 @@ $connection = array(
 try {
     $adapter = Marketing\factories\DBFactory::create('MySql', $connection);
     $userMapper = new Marketing\mapper\UserMapper($adapter);
-    
 } catch (\InvalidArgumentException $e) {
     echo "Connection string must be properly filled with DB connection data\n";
 } 
 
 $task = new Marketing\TaskController($userMapper, $adapter);
 $task->execute();
-

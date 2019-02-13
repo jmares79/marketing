@@ -7,5 +7,5 @@ use PDO;
 
 class MagicSql extends AbstractAdapter implements AdapterInterface
 {
-
+    //TODO another adapter example
 }
